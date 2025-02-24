@@ -42,6 +42,7 @@ const ProductDetails = ({ product, onBack, onAddToCart }) => {
       totalAmount: calculateTotal(),
       hours: calculateTotalHours()
     });
+    window.alert("✅ Item added to the cart successfully!");
     onBack();
   };
 

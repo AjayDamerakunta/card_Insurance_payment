@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from "react-router-dom";  // useNavigate
 
 const Cart = ({ items, onClose, setCartItems }) => {
   const [showCheckout, setShowCheckout] = useState(false);
@@ -12,6 +13,10 @@ const Cart = ({ items, onClose, setCartItems }) => {
     city: '',
     pincode: ''
   });
+
+  const [acceptLateFee, setAcceptLateFee] = useState(false); // ✅ State for checkbox
+
+  const navigate = useNavigate();  // useNavigate
 
   const calculateTotal = () => {
     return items.reduce((total, item) => total + item.totalAmount, 0);
@@ -32,7 +37,12 @@ const Cart = ({ items, onClose, setCartItems }) => {
 
   const handleCheckout = (e) => {
     e.preventDefault();
-    alert('Payment integration would be implemented here');
+    if (!acceptLateFee) {
+      alert("⚠ Please accept the late fee policy to proceed.");
+      return;
+    }
+    // alert('Payment integration would be implemented here');
+    navigate("/payment", { state: { formData, totalAmount: calculateTotal() } });
   };
 
   return (
@@ -98,6 +108,28 @@ const Cart = ({ items, onClose, setCartItems }) => {
               <span>Total</span>
               <span>₹{calculateTotal()}</span>
             </div>
+          </div>
+
+
+           {/* ✅ Late Fee Warning Section */}
+           <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-lg flex items-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828304.png" alt="Warning" className="w-10 h-10 mr-3" />
+            <p className="text-sm font-medium">
+              ⚠ Late fee will be applied to your product as per its worth and rental duration.
+            </p>
+          </div>
+
+          <div className="flex items-center mt-4">
+            <input
+              type="checkbox"
+              id="acceptLateFee"
+              checked={acceptLateFee}
+              onChange={(e) => setAcceptLateFee(e.target.checked)}
+              className="mr-2 w-5 h-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            />
+            <label htmlFor="acceptLateFee" className="text-gray-700 text-sm">
+              I agree to the late fee policy.
+            </label>
           </div>
 
           {!showCheckout ? (
