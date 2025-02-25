@@ -210,10 +210,11 @@ const Cart = ({ items, onClose, setCartItems }) => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="w-1/2 md:w-1/3 bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 mt-6 mx-auto flex justify-center"
+                className="w-[200px] bg-indigo-600 text-white py-2 px-4 text-sm rounded-lg font-medium hover:bg-indigo-700 mt-8 mx-auto flex justify-center"
+                >
 
 
-              >
+              
                 Proceed to Payment
               </motion.button>
             </motion.form>
